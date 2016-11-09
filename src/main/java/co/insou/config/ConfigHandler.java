@@ -15,7 +15,7 @@ public abstract class ConfigHandler<T extends JavaPlugin> {
     protected final FileConfiguration config;
 
     public ConfigHandler(T plugin) {
-        this(plugin, plugin.getConfig());
+        this(ConfigHandler.generateConfigAndGet(plugin), plugin.getConfig());
     }
 
     public ConfigHandler(T plugin, String config) {
@@ -82,6 +82,12 @@ public abstract class ConfigHandler<T extends JavaPlugin> {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private static <T extends JavaPlugin> T generateConfigAndGet(T plugin) {
+        plugin.saveDefaultConfig();
+
+        return plugin;
     }
 
     private static File createIfAbsentAndGetDir(File file) {
